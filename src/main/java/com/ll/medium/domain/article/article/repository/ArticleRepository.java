@@ -1,10 +1,12 @@
 package com.ll.medium.domain.article.article.repository;
 
 import com.ll.medium.domain.article.article.entity.Article;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class ArticleRepository {
     private final List<Article> articles = new ArrayList<>();
 

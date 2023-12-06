@@ -3,6 +3,8 @@ package com.ll.medium.domain.article.article.controller;
 import com.ll.medium.domain.article.article.entity.Article;
 import com.ll.medium.domain.article.article.service.ArticleService;
 import com.ll.medium.global.rsData.RsData;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class ArticleController {
-    private final ArticleService articleService = new ArticleService();
+
+    private final ArticleService articleService;
 
     @GetMapping("/article/write")
     String showWrite() {
