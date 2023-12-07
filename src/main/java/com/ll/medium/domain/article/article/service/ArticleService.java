@@ -34,4 +34,14 @@ public class ArticleService {
     public Optional<Article> findById(long id) {
         return articleRepository.findById(id);
     }
+
+    public void delete(long id) {
+        articleRepository.delete(id);
+    }
+
+    public void modify(long id, String title, String body) {
+        Article article = findById(id).get();
+        article.setTitle(title);
+        article.setBody(body);
+    }
 }

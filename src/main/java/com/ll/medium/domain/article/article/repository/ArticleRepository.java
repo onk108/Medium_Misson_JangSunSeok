@@ -40,4 +40,8 @@ public class ArticleRepository {
                 .filter(article -> article.getId() == id)
                 .findFirst();
     }
+
+    public void delete(long id) {
+        articles.removeIf(article -> article.getId() == id);
+    }
 }

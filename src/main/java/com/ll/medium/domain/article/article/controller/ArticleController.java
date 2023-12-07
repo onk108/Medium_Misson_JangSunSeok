@@ -29,6 +29,41 @@ public class ArticleController {
     private final ArticleService articleService;
     private final Rq rq;
 
+    @GetMapping("/article/modify/{id}")
+    String showModify(Model model, @PathVariable long id) {
+        Article article = articleService.findById(id).get();
+
+        model.addAttribute("article", article);
+
+        return "article/modify";
+    }
+
+    @Data
+    public static class ModifyForm {
+        @NotBlank
+        private String title;
+        @NotBlank
+        private String body;
+    }
+
+    @PostMapping("/article/modify/{id}")
+    String write(@PathVariable long id, @Valid ModifyForm modifyForm) {
+        articleService.modify(id, modifyForm.title, modifyForm.body);
+
+        String msg = "id %d, article modified".formatted(id);
+
+        return "redirect:/article/list?msg=" + msg;
+    }
+
+    @GetMapping("/article/delete/{id}")
+    String delete(@PathVariable long id) {
+        articleService.delete(id);
+
+        String msg = "id %d, article deleted".formatted(id);
+
+        return "redirect:/article/list?msg=" + msg;
+    }
+
     @GetMapping("/article/write")
     String showWrite() {return "article/write";}
 
