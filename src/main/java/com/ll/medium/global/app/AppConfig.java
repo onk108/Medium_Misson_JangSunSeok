@@ -10,13 +10,5 @@ import java.util.List;
 
 @Configuration
 public class AppConfig {
-    @Bean
-    List<Article> articles2() {
-        return new LinkedList<>();
-    }
 
-    @Bean
-    List<Article> articles() {
-        return new ArrayList<>();
-    }
 }
