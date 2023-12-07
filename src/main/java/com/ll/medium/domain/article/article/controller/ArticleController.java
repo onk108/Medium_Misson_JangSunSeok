@@ -27,7 +27,46 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ArticleController {
     private final ArticleService articleService;
-    private final Rq rq;
+
+    @GetMapping("/article/list")
+    String showList(Model model) {
+        List<Article> articles = articleService.findAll();
+
+        model.addAttribute("articles", articles);
+
+        return "article/list";
+    }
+
+    @GetMapping("/article/detail/{id}")
+    String showDetail(Model model, @PathVariable long id) {
+        Article article = articleService.findById(id).get();
+
+        model.addAttribute("article", article);
+
+        return "article/detail";
+    }
+
+    @GetMapping("/article/write")
+    String showWrite() {
+        return "article/write";
+    }
+
+    @Data
+    public static class WriteForm {
+        @NotBlank
+        private String title;
+        @NotBlank
+        private String body;
+    }
+
+    @PostMapping("/article/write")
+    String write(@Valid WriteForm writeForm) {
+        Article article = articleService.write(writeForm.title, writeForm.body);
+
+        String msg = "id %d, article created".formatted(article.getId());
+
+        return "redirect:/article/list?msg=" + msg;
+    }
 
     @GetMapping("/article/modify/{id}")
     String showModify(Model model, @PathVariable long id) {
@@ -62,88 +101,5 @@ public class ArticleController {
         String msg = "id %d, article deleted".formatted(id);
 
         return "redirect:/article/list?msg=" + msg;
-    }
-
-    @GetMapping("/article/write")
-    String showWrite() {return "article/write";}
-
-    @GetMapping("/article/detail/{id}")
-    String showDetail(Model model, @PathVariable long id) {
-        Article article = articleService.findById(id).get();
-
-        model.addAttribute("article", article);
-
-        return "article/detail";
-    }
-
-    @Data
-    public static class WriteForm {
-        @NotBlank
-        private String title;
-        @NotBlank
-        private String body;
-    }
-
-    @PostMapping("/article/write")
-    String write(@Valid WriteForm writeForm) {
-        Article article = articleService.write(writeForm.title, writeForm.body);
-
-        String msg = "id %d, article created".formatted(article.getId());
-
-        return "redirect:/article/list?msg=" + msg;
-    }
-
-    @GetMapping("/article/list")
-    String showList(Model model) {
-        List<Article> articles = articleService.findAll();
-
-        model.addAttribute("articles", articles);
-
-        return "article/list";
-    }
-
-    @GetMapping("/article/getLastArticle")
-    @ResponseBody
-    Article getLastArticle() {
-        return articleService.findLastArticle();
-    }
-
-    @GetMapping("/article/getArticles")
-    @ResponseBody
-    List<Article> getArticles() {
-        return articleService.findAll();
-    }
-
-    @GetMapping("/article/articleServicePointer")
-    @ResponseBody
-    String articleServicePointer() {
-        return articleService.toString();
-    }
-
-    @GetMapping("/article/httpServletRequestPointer")
-    @ResponseBody
-    String httpServletRequestPointer(HttpServletRequest req) {
-        return req.toString();
-    }
-
-    @GetMapping("/article/httpServletResponsePointer")
-    @ResponseBody
-    String httpServletResponsePointer(HttpServletResponse resp) {
-        return resp.toString();
-    }
-
-    @GetMapping("/article/rqPointer")
-    @ResponseBody
-    String rqPointer() {
-        return rq.toString();
-    }
-
-    @GetMapping("/article/rqTest")
-    String showRqTest(Model model) {
-        String rqToString = rq.toString();
-
-        model.addAttribute("rqToString", rqToString);
-
-        return "article/rqTest";
     }
 }
