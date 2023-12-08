@@ -43,7 +43,7 @@ public class MemberController {
         }
 
         // 로그인 처리
-        Cookie cookie = new Cookie("loginedMemberId", "2");
+        Cookie cookie = new Cookie("loginedMemberId", member.getId() + "");
         cookie.setPath("/");
         response.addCookie(cookie);
 
