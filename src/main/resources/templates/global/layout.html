@@ -7,7 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SIMPLE</title>
 
+    <!-- 폰트어썸 불러오기 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- 제이쿼리 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- toastr 불러오기 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link href="https://jhs512.github.io/toastr/toastr.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/resource/global.css">
+    <script src="/resource/global.js"></script>
 </head>
 <body>
 
@@ -24,13 +35,17 @@
                 </svg>
             </label>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                <li><a>게시물 리스트</a></li>
-                <li><a>게시물 작성</a></li>
+                <li><a href="/article/list"><i class="fa-solid fa-list"></i> 게시물 리스트</a></li>
+                <li><a href="/article/write"><i class="fa-solid fa-pen"></i> 게시물 작성</a></li>
+                <li><a href="/member/login"><i class="fa-solid fa-right-to-bracket"></i> 로그인</a></li>
+                <li><a href="/member/join"><i class="fa-solid fa-user-plus"></i> 회원가입</a></li>
+                <li><a href="/member/me"><i class="fa-solid fa-user"></i> 내 정보</a></li>
+                <li><a href="/member/logout"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a></li>
             </ul>
         </div>
     </div>
     <div class="navbar-center">
-        <a class="btn btn-ghost text-xl">SIMPLE</a>
+        <a href="/article/write" class="btn btn-ghost text-xl">SIMPLE</a>
     </div>
     <div class="navbar-end">
 
@@ -38,9 +53,21 @@
 </div>
 
 
-<div class="text-red-600" th:if="${param.msg} != null">
-    메세지 : [[${param.msg}]]
+<div class="alert alert-success" th:if="${param.msg} != null">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span th:text="${param.msg}">Your purchase has been confirmed!</span>
 </div>
+
+<script>
+    const queryParams = getQueryParams();
+
+    if ( queryParams.msg ) {
+        toastNotice(queryParams.msg);
+    }
+</script>
 
 <th:block layout:fragment="content"></th:block>
 
