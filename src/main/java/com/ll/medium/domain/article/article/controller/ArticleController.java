@@ -77,15 +77,14 @@ public class ArticleController {
     }
 
     @GetMapping("/article/write")
-    String showWrite(HttpServletRequest req, Model model) {
-        long loginedMemberId = Optional
-                .ofNullable(req.getSession().getAttribute("loginedMemberId"))
-                .map(id -> (long) id)
-                .orElse(0L);
+    String showWrite() {
+        HttpServletRequest req = rq.getReq();
+
+        long loginedMemberId = rq.getLoginedMemberId();
 
         if (loginedMemberId > 0) {
-            Member loginedMember = memberService.findById(loginedMemberId).get();
-            model.addAttribute("loginedMember", loginedMember);
+            Member loginedMember = rq.getLoginedMember();
+            req.setAttribute("loginedMember", loginedMember);
         }
 
         return "article/article/write";
