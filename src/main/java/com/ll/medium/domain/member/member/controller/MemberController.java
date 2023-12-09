@@ -34,17 +34,23 @@ public class MemberController {
     }
 
     @PostMapping("/member/login")
-    String login(@Valid LoginForm loginForm, HttpServletRequest req, HttpServletResponse response) {
+    String login(@Valid LoginForm loginForm) {
         Member member = memberService.findByUsername(loginForm.username).get();
 
         if (!member.getPassword().equals(loginForm.password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        HttpSession session = req.getSession();
-        session.setAttribute("loginedMemberId", member.getId());
+        rq.setSessionAttr("loginedMemberId", member.getId());
 
         return rq.redirect("/article/list", "로그인이 완료되었습니다.");
+    }
+
+    @GetMapping("/member/logout")
+    String logout() {
+        rq.removeSessionAttr("loginedMemberId");
+
+        return rq.redirect("/article/list", "로그아웃 되었습니다.");
     }
 
     @GetMapping("/member/join")
