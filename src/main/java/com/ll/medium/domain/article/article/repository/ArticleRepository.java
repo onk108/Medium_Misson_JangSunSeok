@@ -1,6 +1,9 @@
 package com.ll.medium.domain.article.article.repository;
 
 import com.ll.medium.domain.article.article.entity.Article;
+import com.ll.medium.domain.member.member.entity.Member;
+import com.ll.medium.domain.member.member.repository.MemberRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -21,10 +24,6 @@ public class ArticleRepository {
         articles.add(article);
 
         return article;
-    }
-
-    public Article findLastArticle() {
-        return articles.getLast();
     }
 
     public List<Article> findAll() {
