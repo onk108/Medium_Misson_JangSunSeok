@@ -18,4 +18,8 @@ public class Member {
         this.username = username;
         this.password = password;
     }
+
+    public boolean isAdmin() {
+        return username.equals("admin");
+    }
 }
