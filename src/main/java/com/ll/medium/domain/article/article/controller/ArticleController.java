@@ -49,8 +49,7 @@ public class ArticleController {
     }
 
     @GetMapping("/article/detail/{id}")
-    String showDetail(Model model, @PathVariable long id) {
-
+    String showDetail(Model model, @PathVariable(name = "id") long id) {
         Article article = articleService.findById(id).get();
 
         model.addAttribute("article", article);
@@ -81,9 +80,12 @@ public class ArticleController {
     }
 
     @GetMapping("/article/modify/{id}")
-    String showModify(Model model, @PathVariable long id) {
-
+    String showModify(Model model, @PathVariable(name = "id") long id) {
         Article article = articleService.findById(id).get();
+
+        if (article == null) throw new RuntimeException("존재하지 않는 게시물입니다.");
+
+        if (!articleService.canModify(rq.getMember(), article)) throw new RuntimeException("수정권한이 없습니다.");
 
         model.addAttribute("article", article);
 
@@ -107,7 +109,7 @@ public class ArticleController {
     }
 
     @GetMapping("/article/delete/{id}")
-    String delete(@PathVariable long id) {
+    String delete(@PathVariable(name = "id") long id) {
 
         articleService.delete(id);
 

@@ -20,8 +20,8 @@ public class NotProd {
             Member memberUser2 = memberService.join("user2", "1234");
 
             articleService.write(memberAdmin, "제목1", "내용1");
-            articleService.write(memberAdmin, "제목2", "내용2");
-            articleService.write(memberAdmin, "제목3", "내용3");
+            articleService.write(memberUser1, "제목2", "내용2");
+            articleService.write(memberUser2, "제목3", "내용3");
         };
     }
 }
