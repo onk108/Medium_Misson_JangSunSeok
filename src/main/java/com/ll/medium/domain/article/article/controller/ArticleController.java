@@ -60,8 +60,6 @@ public class ArticleController {
 
     @GetMapping("/article/write")
     String showWrite() {
-        if(!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
-
         return "article/article/write";
     }
 
@@ -76,7 +74,6 @@ public class ArticleController {
     @PostMapping("/article/write")
     @SneakyThrows
     String write(@Valid WriteForm writeForm, HttpServletRequest req) {
-        if(!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
 
         Article article = articleService.write(rq.getMember(), writeForm.title, writeForm.body);
 
@@ -85,7 +82,6 @@ public class ArticleController {
 
     @GetMapping("/article/modify/{id}")
     String showModify(Model model, @PathVariable long id) {
-        if(!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
 
         Article article = articleService.findById(id).get();
 
@@ -104,7 +100,6 @@ public class ArticleController {
 
     @PostMapping("/article/modify/{id}")
     String write(@PathVariable long id, @Valid ModifyForm modifyForm) {
-        if(!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
 
         articleService.modify(id, modifyForm.title, modifyForm.body);
 
@@ -113,7 +108,6 @@ public class ArticleController {
 
     @GetMapping("/article/delete/{id}")
     String delete(@PathVariable long id) {
-        if(!rq.isLogined()) throw new RuntimeException("로그인 후 이용해주세요.");
 
         articleService.delete(id);
 

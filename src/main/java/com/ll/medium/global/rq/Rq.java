@@ -10,6 +10,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 
 @RequestScope
@@ -55,7 +56,7 @@ public class Rq {
         return member;
     }
 
-    public void setSessionAttr(String name, long value) {
+    public void setSessionAttr(String name, Object value) {
         req.getSession().setAttribute(name, value);
     }
 
@@ -65,5 +66,10 @@ public class Rq {
 
     public boolean isAdmin() {
         return getMember().isAdmin();
+    }
+
+
+    public <T> T getSessionAttr(String name) {
+        return (T) req.getSession().getAttribute(name);
     }
 }
