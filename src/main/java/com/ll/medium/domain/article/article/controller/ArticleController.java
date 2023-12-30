@@ -101,7 +101,7 @@ public class ArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/modify/{id}")
+    @PutMapping("/modify/{id}")
     String modify(@PathVariable(name = "id") long id, @Valid ModifyForm modifyForm) {
         Article article = articleService.findById(id).get();
 
@@ -113,7 +113,7 @@ public class ArticleController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     String delete(@PathVariable(name = "id") long id) {
         Article article = articleService.findById(id).get();
 
