@@ -1,6 +1,8 @@
 package com.ll.medium.domain.home.home.controller;
 
+import com.ll.medium.global.rq.Rq;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,9 +12,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+    private final Rq rq;
+
     @GetMapping("/")
-    public String goToArticleList() {
+    public String goToArticleList(String msg) {
         return "redirect:/article/list";
     }
 

@@ -1,6 +1,5 @@
 package com.ll.medium.domain.article.article.controller;
 
-mport org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
