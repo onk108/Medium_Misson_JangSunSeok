@@ -134,17 +134,15 @@ public class ArticleController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write2")
-    String showWrite2(ArticleCreateForm articleCreateForm) {
+    String showWrite2() {
         return "article/article/write2";
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/write2")
-    String write2(@Valid ArticleCreateForm articleCreateForm, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            return "article/article/write2";
-        }
+    String write2(@Valid ArticleCreateForm articleCreateForm) {
+        Article article = articleService.write(rq.getMember(), articleCreateForm.getTitle(), articleCreateForm.getBody());
 
-        return "redirect:/";
+        return rq.redirect("/", "%d번 게시물 생성되었습니다.".formatted(article.getId()));
     }
 }
