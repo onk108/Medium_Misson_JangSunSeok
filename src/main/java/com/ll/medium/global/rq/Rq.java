@@ -40,6 +40,9 @@ public class Rq {
     }
 
     public String redirect(String path, String msg) {
+        if(msg == null)
+            return "redirect:" + path;
+
         boolean containsTtl = msg.contains(";ttl=");
 
         if(containsTtl) {
