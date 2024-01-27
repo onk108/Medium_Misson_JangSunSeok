@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.ll.medium.domain.member.member.entity.Member;
 import jakarta.servlet.http.Cookie;
@@ -123,9 +124,27 @@ public class ArticleController {
         return rq.redirect("/", "%d번 게시물 삭제되었습니다.".formatted(id));
     }
 
+    @Data
+    public static class ArticleCreateForm {
+        @NotBlank(message = "제목을 입력해주세요.")
+        private String title;
+        @NotBlank(message = "내용을 입력해주세요.")
+        private String body;
+    }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write2")
-    String showWrite2() {
+    String showWrite2(ArticleCreateForm articleCreateForm) {
         return "article/article/write2";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/write2")
+    String write2(@Valid ArticleCreateForm articleCreateForm, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "article/article/write2";
+        }
+
+        return "redirect:/";
     }
 }
