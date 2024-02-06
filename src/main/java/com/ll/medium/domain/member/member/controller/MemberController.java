@@ -68,16 +68,8 @@ public class MemberController {
     @PreAuthorize("isAnonymous()")
     @PostMapping("/member/join")
     String join(@Valid JoinForm joinForm) {
-        try {
-            RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
+        RsData<Member> joinRs = memberService.join(joinForm.username, joinForm.password);
 
-            if(joinRs.isFail()) {
-                return rq.historyBack(joinRs.getMsg());
-            }
-
-            return rq.redirect("/member/login", joinRs.getMsg());
-        } catch (RuntimeException e) {
-            return rq.historyBack(e.getMessage());
-        }
+        return rq.redirect("/member/login", joinRs.getMsg());
     }
 }
