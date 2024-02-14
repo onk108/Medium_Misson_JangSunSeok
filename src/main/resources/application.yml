@@ -1,0 +1,11 @@
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    user:
+      name: user
+      password: 123456
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
